@@ -92,7 +92,31 @@ If the oracle price is older than `MAX_ORACLE_AGE` (e.g., 10 blocks) or the pric
 
 ## Example
 
-### Current Model
+### Current Model Calculation
+
+| Row | Description                              | ETH.DAI          | ETH.USDT         | Total              | Equation / Note                  |
+|-----|------------------------------------------|------------------|------------------|--------------------|----------------------------------|
+| i   | Input in ETH.DAI                         | 2350             | -                | -                  | -                                |
+| n   | Subswaps                                 | 18               | -                | -                  | -                                |
+| m   | Multiplier                               | 1                | -                | -                  | -                                |
+| -   | Rune price                               | 0.39121846098590285 | 0.39093959731543626 | -             | -                                |
+| X   | Pool depth (X)                           | 130710           | 5960000          | -                  | -                                |
+| Y   | Pool depth (Y)                           | 334110           | 2330000          | -                  | -                                |
+| x   | Sub-swap size (i/n/m)                    | 130.55555555555554 | 333.0495776245297 | -                 | -                                |
+| Y/X | Infinite external liquidity ratio        | 2.556116593986688 | 0.39093959731543626 | -               | Y/X                              |
+| a   | Reference Price (Valuey from eq 3)       | 333.71522199270646 | 130.20226776260978 | -                | valuey = xY/X                    |
+| b   | Raw slippage (equation 2)                | 333.3822336771218 | 130.19499236207034 | -                 | output = xY/(x+X)                |
+| c   | y (equation 6)                           | 333.0495776245297 | 130.1877173680634 | -                  | y = (x Y X) / (x + X)^2          |
+| s   | Raw slip in rune (a - b)                 | 0.33298831558465736 | 0.007275400539441534 | -              | -                                |
+| s/a | Slip (equation 4)                        | 0.0009978217762926036 | 0.00005587767912535208 | 0.0010536994554179557 | slip = x/(x+X)          |
+| f   | Liquidity fee in rune (b - c)            | 0.33265605259210157 | 0.007274994006935431 | -                | x²Y/(x+X)²                       |
+| -   | Liquidity fee in %                       | 0.0009968261279953599 | 0.000055874556810327644 | 0.0010527006848056876 | -                      |
+| n*m*f | Total Liquidity fee in USDT            | -                | -                | 2.473491292913933  | -                                |
+| n*m*c | Quote receive by user in ETH.USDT      | -                | -                | 2343.3789126251413 | -                                |
+| -   | No Slippage/fee in ETH.USDT              | -                | -                | 2348.3249010694817 | -                                |
+| (f+s)/a | Total cost in %                        | 0.0019946479042879384 | 0.00011175223593573591 | 0.0021064001402236743 | -                    |
+| -   | Actual received in ETH.USDT              | -                | -                | 2327.050749        | -                                |
+| -   | Actual received (ratio)                  | -                | -                | 0.9909407117985279 | -                                |
 
 - User swaps 2350 ETH.DAI → ETH.USDT.  
 - ETH.DAI/RUNE pool depth: 130.71k/334.11k, ETH.USDT/RUNE pool depth: 2330k/5960k.  
@@ -103,7 +127,28 @@ If the oracle price is older than `MAX_ORACLE_AGE` (e.g., 10 blocks) or the pric
 - Actual received: 2327.05 USDT  
 - Total cost to user: 90.6bp
 
-### Proposed Model
+### Proposed Model 1 Calculation
+
+| Row | Description                              | ETH.DAI          | ETH.USDT         | Total              | Equation / Note                  |
+|-----|------------------------------------------|------------------|------------------|--------------------|----------------------------------|
+| i   | Input in ETH.DAI                         | 2350             | -                | -                  | -                                |
+| n   | Subswaps                                 | 18               | -                | -                  | -                                |
+| m   | Multiplier                               | 5                | -                | -                  | -                                |
+| e   | Fee to Thorchain                         | 0.0012           | -                | -                  | -                                |
+| -   | Rune price                               | 0.39121846098590285 | 0.39093959731543626 | -             | -                                |
+| X   | Pool depth (X)                           | 130710           | 5960000          | -                  | -                                |
+| Y   | Pool depth (Y)                           | 334110           | 2330000          | -                  | -                                |
+| x   | Sub-swap size (i/n/m)                    | 26.111111111111107 | 66.72971422500795 | -                 | -                                |
+| Y/X | Infinite external liquidity ratio        | 2.556116593986688 | 0.39093959731543626 | -               | Y/X                              |
+| a   | Reference Price (Valuey from eq 3)       | 66.74304439854129 | 26.087287608098748 | -                | valuey = xY/X                    |
+| b   | Raw slippage (equation 2)                | 66.72971422500795 | 26.08699553129392 | -                 | output = xY/(x+X)                |
+| s   | Raw slip in rune (a - b)                 | 0.013330173533333323 | 0.00029207680482912224 | -             | -                                |
+| s/a | Slip (equation 4)                        | 0.00019972378625305427 | 0.000011196135421156188 | 0.00021091992167421045 | slip = x/(x+X)     |
+| -   | (intermediate)                           | 0.06665086766666661 | 0.0014603840241456112 | -                | -                                |
+| (n*m*b*e)/rune price | Total Liquidity fee in USDT     | -                | -                | 2.8173955173797425 | -                                |
+| n*m*b*(1-e) | Quote receive by user in ETH.USDT   | -                | -                | 2345.0095978164527 | -                                |
+| -   | No Slippage/fee in USDT                  | -                | -                | 2348.3249010694817 | -                                |
+| -   | Total cost in %                          | 0.00019972378625310316 | 0.000011196135421109865 | 0.001410919921674213 | -                 |
 
 - User swaps 2350 ETH.DAI → ETH.USDT.  
 - ETH.DAI/RUNE pool depth: 130.71k/334.11k, ETH.USDT/RUNE pool depth: 2330k/5960k.  
@@ -131,7 +176,18 @@ Following assumptions are made for this proposal.
 
 7. Protocol continues to improve to increase the number of rapid swaps. Ideally most swaps can be filled in one block at 2bp raw slippage.
 
-## Key Performance Indicators (KPIs)
+### Key Performance Indicators (KPIs)
+
+| Metric                                      | How to Measure                                                                 | Target                                                                 |
+|---------------------------------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| Market share on recommended routes          | Compare THORChain’s routed volume at partner’s level                           | Higher % share that is routed towards Thorchain                        |
+| Average effective fee for large swaps       | Calculate (inbound - outbound) / inbound for swaps using Rapid Auto Swap mode. | Lower than current slip‑based model for same size.                     |
+| Arbitrage activity volume                   | Volume of rapid limit swaps that execute within 1 block of a user subswap.     | Close to capacity of number of subswaps fit a block                    |
+| Pool price deviation from external reference| Average absolute difference between pool price                                 | Reduce pool and oracle price difference to within 3-5bp                |
+| Total swap volume                           | On‑chain volume                                                                | Significant increase over 3 months time after launch.                  |
+| Protocol revenue                            | Sum of all fees collected (slip + outbound + new fixed fee).                   | Remain stable or grow despite lower per‑swap fees.                     |
+| Protocol congestion                         | Block times increase significantly due to many subswaps.                       | Reduce RapidAutoTargetSlipBp or cap k lower via Mimir.                 |
+| Arbitrage discount abuse                    | Rapid limit swap volume explodes but pool efficiency does not improve.         | Restrict discount further (e.g., only for Trade Accounts with minimum balance). |
 
 ## Conclusion
 
