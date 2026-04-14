@@ -99,24 +99,24 @@ If the oracle price is older than `MAX_ORACLE_AGE` (e.g., 10 blocks) or the pric
 | i   | Input in ETH.DAI                         | 2350             | -                | -                  | -                                |
 | n   | Subswaps                                 | 18               | -                | -                  | -                                |
 | m   | Multiplier                               | 1                | -                | -                  | -                                |
-| -   | Rune price                               | 0.39121846098590285 | 0.39093959731543626 | -             | -                                |
+| -   | Rune price                               | 0.39 | 0.39 | -             | -                                |
 | X   | Pool depth (X)                           | 130710           | 5960000          | -                  | -                                |
 | Y   | Pool depth (Y)                           | 334110           | 2330000          | -                  | -                                |
-| x   | Sub-swap size (i/n/m)                    | 130.55555555555554 | 333.0495776245297 | -                 | -                                |
-| Y/X | Infinite external liquidity ratio        | 2.556116593986688 | 0.39093959731543626 | -               | Y/X                              |
-| a   | Reference Price (Valuey from eq 3)       | 333.71522199270646 | 130.20226776260978 | -                | valuey = xY/X                    |
-| b   | Raw slippage (equation 2)                | 333.3822336771218 | 130.19499236207034 | -                 | output = xY/(x+X)                |
-| c   | y (equation 6)                           | 333.0495776245297 | 130.1877173680634 | -                  | y = (x Y X) / (x + X)^2          |
-| s   | Raw slip in rune (a - b)                 | 0.33298831558465736 | 0.007275400539441534 | -              | -                                |
-| s/a | Slip (equation 4)                        | 0.0009978217762926036 | 0.00005587767912535208 | 0.0010536994554179557 | slip = x/(x+X)          |
-| f   | Liquidity fee in rune (b - c)            | 0.33265605259210157 | 0.007274994006935431 | -                | x²Y/(x+X)²                       |
-| -   | Liquidity fee in %                       | 0.0009968261279953599 | 0.000055874556810327644 | 0.0010527006848056876 | -                      |
-| n*m*f | Total Liquidity fee in USDT            | -                | -                | 2.473491292913933  | -                                |
-| n*m*c | Quote receive by user in ETH.USDT      | -                | -                | 2343.3789126251413 | -                                |
-| -   | No Slippage/fee in ETH.USDT              | -                | -                | 2348.3249010694817 | -                                |
-| (f+s)/a | Total cost in %                        | 0.0019946479042879384 | 0.00011175223593573591 | 0.0021064001402236743 | -                    |
-| -   | Actual received in ETH.USDT              | -                | -                | 2327.050749        | -                                |
-| -   | Actual received (ratio)                  | -                | -                | 0.9909407117985279 | -                                |
+| x   | Sub-swap size (i/n/m)                    | 130.55 | 333.04 | -                 | -                                |
+| Y/X | Infinite external liquidity ratio        | 2.55 | 0.39 | -               | Y/X                              |
+| a   | Reference Price (Valuey from eq 3)       | 333.71 | 130.20 | -                | valuey = xY/X                    |
+| b   | Raw slippage (equation 2)                | 333.38 | 130.19 | -                 | output = xY/(x+X)                |
+| c   | y (equation 6)                           | 333.04| 130.18 | -                  | y = (x Y X) / (x + X)^2          |
+| s   | Raw slip in rune (a - b)                 | 0.332 | 0.00727 | -              | -                                |
+| s/a | Slip (equation 4)                        | 0.000997 | 0.0000558 | 0.00105| slip = x/(x+X)          |
+| f   | Liquidity fee in rune (b - c)            | 0.332 | 0.00727 | -                | x²Y/(x+X)²                       |
+| -   | Liquidity fee in %                       | 0.0009968 | 0.00005587 | 0.00105 | -                      |
+| n*m*f | Total Liquidity fee in USDT            | -                | -                | 2.47 | -                                |
+| n*m*c | Quote receive by user in ETH.USDT      | -                | -                | 2343.37 | -                                |
+| -   | No Slippage/fee in ETH.USDT              | -                | -                | 2348.32 | -                                |
+| (f+s)/a | Total cost in %                        | 0.00199 | 0.000111 | 0.0021 | -                    |
+| -   | Actual received in ETH.USDT              | -                | -                | 2327.050        | -                                |
+| -   | Actual received (ratio)                  | -                | -                | 0.9909 | -                                |
 
 - User swaps 2350 ETH.DAI → ETH.USDT.  
 - ETH.DAI/RUNE pool depth: 130.71k/334.11k, ETH.USDT/RUNE pool depth: 2330k/5960k.  
