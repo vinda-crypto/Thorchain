@@ -21,7 +21,7 @@ When a user sets `streaming_quantity=0` (auto mode) and `rapid_swap=true`, the s
 
 1. **Subswap count determination**  
    Instead of using the normal `streaming_min_slip_bp` (e.g., 5 bp), the protocol uses a new Mimir variable:  
-   **RapidAutoTargetSlipBp** (suggested initial value: 2 bp).  
+   **RapidAutoTargetSlipBp** (suggested initial value: 1 bp).  
 
    The existing streaming swap algorithm calculates the number of subswaps `k` needed so that each subswap’s raw slippage ≈ RapidAutoTargetSlipBp.  
 
@@ -73,7 +73,7 @@ final_outbound = total_raw_out × (1 – Fee to Thorchain / 10000)
 The deducted fee is sent to the THORChain Reserve as system income.
 
 4. **Fallback**  
-If `rapid_yes = false` or `streaming_quantity ≠ 0`, the swap reverts to the current slip‑based fee model (no change).
+If `rapid_swap = false` or `streaming_quantity ≠ 0`, the swap reverts to the current slip‑based fee model (no change).
 
 ### Part 2: Arbitrage Discount for Trade Accounts
 
