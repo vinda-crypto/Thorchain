@@ -17,7 +17,7 @@ Arbitrageurs are highly fee-elastic. A reduction in their cost directly increase
 
 ### Part 1: Rapid Auto Swap for End Users
 
-When a user sets `streaming_quantity=0` (auto mode) and `rapid_yes=true`, the swap executes as follows:
+When a user sets `streaming_quantity=0` (auto mode) and `rapid_swap=true`, the swap executes as follows:
 
 1. **Subswap count determination**  
    Instead of using the normal `streaming_min_slip_bp` (e.g., 5 bp), the protocol uses a new Mimir variable:  
